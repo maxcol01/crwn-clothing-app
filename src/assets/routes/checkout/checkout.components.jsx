@@ -10,11 +10,23 @@ const CheckOutRoute = () => {
     return(
         <div>
             {cartItems.map(({id, name, imageUrl, quantity, price}) => (
-                <div key={id}>
+                <div key={id} className="selection-container">
                     <hr/>
-                    <h1>{name}</h1>
-                    <img src={imageUrl} alt={name}/>
-                    <h2>{quantity}x ${price}</h2>
+                    <div className="selection-information">
+                        <h1>{name}</h1>
+                        <img src={imageUrl} alt={name}/>
+                        <h2>{quantity}<i className="fa-solid fa-xmark"></i>${price} = ${quantity*price}</h2>
+                    </div>
+                    <div className="selection-interaction">
+                        <span>
+                            <button><i className="fa-solid fa-chevron-left"></i></button>
+                            {quantity}
+                            <button><i className="fa-solid fa-chevron-right"></i></button>
+                        </span>
+                        <span>
+                            <button><i className="fa-solid fa-trash-can"></i></button>
+                        </span>
+                    </div>
                     <hr/>
                 </div>
             ))}
