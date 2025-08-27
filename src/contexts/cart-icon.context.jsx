@@ -12,10 +12,9 @@ const addCartItem = (cartItems, productToAdd) => {
         ? { ...item, quantity: item.quantity + 1 }
         : item
     );
-  } else {
-    // Add new item with quantity = 1
-    return [...cartItems, { ...productToAdd, quantity: 1 }];
   }
+  return [...cartItems, { ...productToAdd, quantity: 1 }];
+
 };
 
 {/* Create the context */}
