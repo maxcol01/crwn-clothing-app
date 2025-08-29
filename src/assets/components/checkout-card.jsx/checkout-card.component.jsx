@@ -19,12 +19,12 @@ const CheckOutCard = ({info:{name, imageUrl, quantity, price, id}}) => {
             </div>
             <div className="selection-interaction">
                 <span>
-                    <button onClick={()=>removeItemToCart({name, imageUrl, quantity, price, id})}><i className="fa-solid fa-chevron-left"></i></button>
+                    <button onClick={()=>removeItemToCart({id})}><i className="fa-solid fa-chevron-left"></i></button>
                     {quantity}
-                    <button onClick={()=>addItemToCart({name, imageUrl, quantity, price, id})}><i className="fa-solid fa-chevron-right"></i></button>
+                    <button onClick={()=>addItemToCart({id})}><i className="fa-solid fa-chevron-right"></i></button>
                 </span>
                 <span>
-                    <button onClick={()=>deleteItemToCart({name, imageUrl, quantity, price, id})} ><i className="fa-solid fa-trash-can"></i></button>
+                    <button onClick={()=>deleteItemToCart({id})} ><i className="fa-solid fa-trash-can"></i></button>
                 </span>
             </div>
             <hr/>
