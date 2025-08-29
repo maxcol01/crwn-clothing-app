@@ -28,7 +28,7 @@ const removeCartItem = (cartItems, productToRemove) => {
         : item
     );
   }
-  return cartItems.filter((cartItem)=> cartItem.id !== productToRemove.id);
+  return deleteCartItem(cartItems, productToRemove);
 };
 
 const deleteCartItem = (cartItems, productToDelete) => {
@@ -44,6 +44,8 @@ export const CartContext = createContext({
     cartItems: [],
     addItemToCart: ()=>{},
     quantity: 0,
+    removeItemToCart: ()=>{},
+    deleteItemToCart: ()=>{},
     total: 0,
     setTotal: ()=>{}
 })
