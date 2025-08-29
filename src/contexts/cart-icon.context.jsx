@@ -28,7 +28,7 @@ const removeCartItem = (cartItems, productToRemove) => {
         : item
     );
   }
-  return cartItems;
+  return cartItems.filter((cartItem)=> cartItem.id !== productToRemove.id);
 };
 
 const deleteCartItem = (cartItems, productToDelete) => {
