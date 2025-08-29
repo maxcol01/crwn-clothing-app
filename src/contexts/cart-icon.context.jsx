@@ -1,6 +1,6 @@
 import {useState, createContext, useEffect} from "react";
 
-
+// for improvement, we might need to merge this function into one !
 const addCartItem = (cartItems, productToAdd) => {
 
   const found = cartItems.find(item => item.id === productToAdd.id);
