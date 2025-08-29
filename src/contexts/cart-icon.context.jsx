@@ -20,8 +20,7 @@ const addCartItem = (cartItems, productToAdd) => {
 const removeCartItem = (cartItems, productToRemove) => {
 
   const found = cartItems.find(item => item.id === productToRemove.id);
-
-  if (found) {
+  if (found.quantity > 1) {
     // Map through and update quantity
     return cartItems.map(item =>
       item.id === productToRemove.id
@@ -29,8 +28,7 @@ const removeCartItem = (cartItems, productToRemove) => {
         : item
     );
   }
-  return [...cartItems, { ...productToRemove, quantity: 1 }];
-
+  return cartItems;
 };
 
 const deleteCartItem = (cartItems, productToDelete) => {
