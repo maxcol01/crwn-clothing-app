@@ -8,9 +8,11 @@ const CheckOutRoute = () => {
 
     const {cartItems} = useContext(CartContext);
     return(
-        <div>
             <div className="checkout-container">
                 <div className="checkout-header">
+                    <div className="header-block">
+                        <span>Product</span>
+                    </div>
                     <div className="header-block">
                         <span>Description</span>
                     </div>
@@ -24,12 +26,11 @@ const CheckOutRoute = () => {
                         <span>Remove</span>
                     </div>
                 </div>
+                {cartItems.map((cartItem) => (
+                    <CheckOutCard key={cartItem.id} info={cartItem}/>
+                ))}
+                <TotalCheckOut />
             </div>
-            {cartItems.map((cartItem) => (
-                <CheckOutCard key={cartItem.id} info={cartItem}/>
-            ))}
-            <TotalCheckOut/>
-        </div>
     )
 }
 

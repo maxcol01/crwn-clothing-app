@@ -22,6 +22,7 @@
     width: 23%;
   }
 
+
   .quantity {
     display: flex;
 
@@ -37,5 +38,12 @@
   .remove-button {
     padding-left: 12px;
     cursor: pointer;
+  }
+  button {
+    border: none;
+    background: none;
+    .fa-trash-can {
+      font-size: 25px;
+    }
   }
 }

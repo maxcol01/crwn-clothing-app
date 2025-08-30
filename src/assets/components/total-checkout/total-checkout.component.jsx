@@ -4,8 +4,8 @@ import {useContext} from "react";
 const TotalCheckOut = () => {
     const {total} = useContext(CartContext);
     return(
-        <div>
-            ${total}
+        <div className="total">
+            Total: ${total}
         </div>
     )
 };

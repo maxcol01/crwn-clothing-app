@@ -20,7 +20,7 @@ const CheckOutCard = ({info:{name, imageUrl, quantity, price, id}}) => {
                 {quantity}
                 <button onClick={() => addItemToCart({id})}><i className="fa-solid fa-chevron-right"></i></button>
             </span>
-            <span className="price">{price}</span>
+            <span className="price">${quantity*price}</span>
             <div className="remove-button"><button onClick={()=>deleteItemToCart({id})} ><i className="fa-solid fa-trash-can"></i></button></div>
         </div>
     )
