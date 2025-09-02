@@ -6,9 +6,9 @@ import {getAuth,
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword, 
     signOut,
-    onAuthStateChanged
+    onAuthStateChanged,
 } from "firebase/auth"
-import {getFirestore, doc, getDoc,setDoc} from "firebase/firestore";
+import {getFirestore, doc, getDoc,setDoc, collection, writeBatch} from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -34,6 +34,18 @@ export const signinWithGooglePopup = () => signInWithPopup(auth, provider)
 export const signinWithGoogleRedirect = () => signInWithRedirect(auth, provider)
 
 export const db = getFirestore(app);
+
+
+export const addCollectionAndDocuments = async (collectionKey, objectToAdd) => {
+    const collectionRef = collection(db, collectionKey);
+    const batch = writeBatch(db);
+
+    objectToAdd.forEach((object) => {
+        const docRef = doc(collectionRef, object.title.toLowerCase());
+        batch.set(docRef, object);
+    });
+    await batch.commit();
+}
 
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation={}) => {
     const userDocRef = doc(db, "users", userAuth.uid); // because we have a uid returned when we login using Google popup
