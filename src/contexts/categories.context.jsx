@@ -7,7 +7,6 @@ import {getCategoriesAndDocuments} from "../assets/utils/firebase/firebase.js";
 export const CategoriesContext = createContext(
     {
         categoriesMap:{},
-        setProducts: () => null
     }
 );
 
@@ -23,6 +22,8 @@ export const CategoriesProvider = ({children}) => {
         };
         getCategoriesMap()
     }, []);
-    const value = {categoriesMap, setCategoriesMap}
+    const value = {categoriesMap,
+        setCategoriesMap,
+    }
     return <CategoriesContext.Provider value={value}>{children}</CategoriesContext.Provider>
 }
