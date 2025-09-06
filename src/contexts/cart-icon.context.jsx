@@ -1,4 +1,4 @@
-import {useState, createContext, useEffect} from "react";
+import {useState, createContext, useEffect, useReducer} from "react";
 
 // for improvement, we might need to merge this function into one !
 const addCartItem = (cartItems, productToAdd) => {
@@ -50,14 +50,66 @@ export const CartContext = createContext({
     setTotal: ()=>{}
 })
 
+{/* Initialize the action types object*/}
+export const CART_ACTION_TYPES = {
+    SET_IS_CLICKED: "SET_IS_CLICKED",
+    SET_CART_ITEM: "SET_CART_ITEM",
+    SET_QUANTITY: "SET_QUANTITY",
+    SET_TOTAL: "SET_TOTAL"
+}
+
+
+{/*Initialize the reducer*/}
+const cartReducer = (state, action) => {
+    const {type, payload} = action;
+    switch (type){
+        case CART_ACTION_TYPES.SET_IS_CLICKED:
+            return {
+                ...state,
+                isClicked:payload
+            }
+        case CART_ACTION_TYPES.SET_CART_ITEM:
+            return {
+                ...state,
+                cartItems:payload
+            }
+        case CART_ACTION_TYPES.SET_QUANTITY:
+            return {
+                ...state,
+                quantity:payload
+            }
+        case CART_ACTION_TYPES.SET_TOTAL:
+            return {
+                ...state,
+                total:payload
+            }
+        default:
+            throw new Error(`Unhandled type ${type}`)
+    }
+}
+
+{/* Initialize the state*/}
+const INITIAL_STATE = {
+    isClicked: false,
+    cartItems: [],
+    quantity: 0,
+    total: 0
+}
+
 {/* Create the Provider */}
 
 export const CartContextProvider = ({children})=>{
-    const [isClicked, setIsClicked] = useState(false); // empty state at the beginning
     const [cartItems, setCartItems] = useState([]);
     const [quantity, setQuantity] = useState(0);
     const  [total, setTotal] = useState(0);
+    const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE);
 
+    {/* Defining the state variables*/}
+    const {isClicked} = state;
+
+    const setIsClicked = () =>{
+        dispatch({type:CART_ACTION_TYPES.SET_IS_CLICKED, payload:!isClicked})
+    }
     useEffect(()=>{
         setQuantity(()=>{
             return cartItems.reduce((acc, cartItem) => {
