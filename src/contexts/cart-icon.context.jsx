@@ -99,17 +99,20 @@ const INITIAL_STATE = {
 {/* Create the Provider */}
 
 export const CartContextProvider = ({children})=>{
-    const [cartItems, setCartItems] = useState([]);
+
     const [quantity, setQuantity] = useState(0);
     const  [total, setTotal] = useState(0);
+
+    {/* Access the reducer information and ready for update*/}
     const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE);
 
     {/* Defining the state variables*/}
-    const {isClicked} = state;
+    const {isClicked, cartItems} = state;
 
     const setIsClicked = () =>{
         dispatch({type:CART_ACTION_TYPES.SET_IS_CLICKED, payload:!isClicked})
     }
+
     useEffect(()=>{
         setQuantity(()=>{
             return cartItems.reduce((acc, cartItem) => {
@@ -127,23 +130,28 @@ export const CartContextProvider = ({children})=>{
 }, [cartItems])
 
 
-    const addItemToCart = (productToAdd)=>{
-        setCartItems(addCartItem(cartItems, productToAdd));
-    }
+    const updateCartItems = (newItems) => {
+      dispatch({ type: CART_ACTION_TYPES.SET_CART_ITEM, payload: newItems });
+    };
 
-    const removeItemToCart = (productToRemove)=>{
-        setCartItems(removeCartItem(cartItems, productToRemove));
-    }
+    const addItemToCart = (productToAdd) => {
+      updateCartItems(addCartItem(cartItems, productToAdd));
+    };
+
+    const removeItemToCart = (productToRemove) => {
+      updateCartItems(removeCartItem(cartItems, productToRemove));
+    };
 
     const deleteItemToCart = (productToDelete) => {
-        setCartItems(deleteCartItem(cartItems, productToDelete))
-    }
+      updateCartItems(deleteCartItem(cartItems, productToDelete));
+    };
+
 
     const value = {
         isClicked,
         setIsClicked,
         cartItems,
-        setCartItems,
+        //setCartItems,
         addItemToCart,
         quantity,
         setQuantity,
