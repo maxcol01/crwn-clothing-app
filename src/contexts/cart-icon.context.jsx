@@ -1,4 +1,4 @@
-import {useState, createContext, useEffect, useReducer} from "react";
+import {createContext, useEffect, useReducer} from "react";
 
 // for improvement, we might need to merge this function into one !
 const addCartItem = (cartItems, productToAdd) => {
@@ -51,6 +51,7 @@ export const CartContext = createContext({
 })
 
 {/* Initialize the action types object*/}
+// eslint-disable-next-line react-refresh/only-export-components
 export const CART_ACTION_TYPES = {
     SET_IS_CLICKED: "SET_IS_CLICKED",
     SET_CART_ITEM: "SET_CART_ITEM",
@@ -113,18 +114,16 @@ export const CartContextProvider = ({children})=>{
     }
 
     useEffect(()=>{
-        const quantity = ()=>{
-            return cartItems.reduce((acc, cartItem) => {
+        const quantity = cartItems.reduce((acc, cartItem) => {
                return acc + cartItem.quantity
-            },0)}
-        dispatch({type:CART_ACTION_TYPES.SET_QUANTITY, payload:quantity()})
+            },0)
+        dispatch({type:CART_ACTION_TYPES.SET_QUANTITY, payload:quantity})
         },[cartItems])
 
    useEffect(()=>{
-       const totalCart = ()=>{
-             return cartItems.reduce((acc, cartItem) => {
+       const totalCart = cartItems.reduce((acc, cartItem) => {
                  return acc + (cartItem.quantity*cartItem.price)
-             },0)}
+             },0)
        dispatch({type:CART_ACTION_TYPES.SET_TOTAL, payload:totalCart()})
         }, [cartItems])
 
