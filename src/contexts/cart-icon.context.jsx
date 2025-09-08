@@ -47,7 +47,6 @@ export const CartContext = createContext({
     removeItemToCart: ()=>{},
     deleteItemToCart: ()=>{},
     total: 0,
-    setTotal: ()=>{}
 })
 
 {/* Initialize the action types object*/}
