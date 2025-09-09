@@ -1,5 +1,5 @@
 import {createContext, useEffect, useReducer} from "react";
-
+import {createAction} from "../assets/utils/reducers/reducer.utils.js";
 // for improvement, we might need to merge this function into one !
 const addCartItem = (cartItems, productToAdd) => {
 
@@ -109,26 +109,26 @@ export const CartContextProvider = ({children})=>{
     const {isClicked, cartItems, quantity, total} = state;
 
     const setIsClicked = () =>{
-        dispatch({type:CART_ACTION_TYPES.SET_IS_CLICKED, payload:!isClicked})
+        dispatch(createAction(CART_ACTION_TYPES.SET_IS_CLICKED,!isClicked));
     }
 
     useEffect(()=>{
         const quantity = cartItems.reduce((acc, cartItem) => {
                return acc + cartItem.quantity
             },0)
-        dispatch({type:CART_ACTION_TYPES.SET_QUANTITY, payload:quantity})
+        dispatch(createAction(CART_ACTION_TYPES.SET_QUANTITY,quantity));
         },[cartItems])
 
    useEffect(()=>{
        const totalCart = cartItems.reduce((acc, cartItem) => {
                  return acc + (cartItem.quantity*cartItem.price)
              },0)
-       dispatch({type:CART_ACTION_TYPES.SET_TOTAL, payload:totalCart()})
+       dispatch(createAction(CART_ACTION_TYPES.SET_TOTAL,totalCart));
         }, [cartItems])
 
 
     const updateCartItems = (newItems) => {
-      dispatch({ type: CART_ACTION_TYPES.SET_CART_ITEM, payload: newItems });
+        dispatch(createAction(CART_ACTION_TYPES.SET_CART_ITEM, newItems));
     };
 
     const addItemToCart = (productToAdd) => {
