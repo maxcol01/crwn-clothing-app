@@ -1,4 +1,4 @@
-import {createContext, useEffect, useReducer} from "react";
+import {createContext, useReducer} from "react";
 import {createAction} from "../assets/utils/reducers/reducer.utils.js";
 // for improvement, we might need to merge this function into one !
 const addCartItem = (cartItems, productToAdd) => {
@@ -71,17 +71,7 @@ const cartReducer = (state, action) => {
         case CART_ACTION_TYPES.SET_CART_ITEM:
             return {
                 ...state,
-                cartItems:payload
-            }
-        case CART_ACTION_TYPES.SET_QUANTITY:
-            return {
-                ...state,
-                quantity:payload
-            }
-        case CART_ACTION_TYPES.SET_TOTAL:
-            return {
-                ...state,
-                total:payload
+                ...payload
             }
         default:
             throw new Error(`Unhandled type ${type}`)
@@ -100,8 +90,6 @@ const INITIAL_STATE = {
 
 export const CartContextProvider = ({children})=>{
 
-    //const  [total, setTotal] = useState(0);
-
     {/* Access the reducer information and ready for update*/}
     const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE);
 
@@ -112,23 +100,21 @@ export const CartContextProvider = ({children})=>{
         dispatch(createAction(CART_ACTION_TYPES.SET_IS_CLICKED,!isClicked));
     }
 
-    useEffect(()=>{
-        const quantity = cartItems.reduce((acc, cartItem) => {
+    const updateCartItems = (newItems) => {
+
+        const quantity = newItems.reduce((acc, cartItem) => {
                return acc + cartItem.quantity
             },0)
-        dispatch(createAction(CART_ACTION_TYPES.SET_QUANTITY,quantity));
-        },[cartItems])
-
-   useEffect(()=>{
-       const totalCart = cartItems.reduce((acc, cartItem) => {
+        const totalCart = newItems.reduce((acc, cartItem) => {
                  return acc + (cartItem.quantity*cartItem.price)
              },0)
-       dispatch(createAction(CART_ACTION_TYPES.SET_TOTAL,totalCart));
-        }, [cartItems])
 
-
-    const updateCartItems = (newItems) => {
-        dispatch(createAction(CART_ACTION_TYPES.SET_CART_ITEM, newItems));
+        const payload = {
+            newItems,
+            quantity,
+            totalCart
+        }
+        dispatch(createAction(CART_ACTION_TYPES.SET_CART_ITEM, payload));
     };
 
     const addItemToCart = (productToAdd) => {
