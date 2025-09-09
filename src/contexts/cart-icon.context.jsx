@@ -110,10 +110,10 @@ export const CartContextProvider = ({children})=>{
              },0)
 
         const payload = {
-            newItems,
-            quantity,
-            totalCart
-        }
+          cartItems: newItems,
+          quantity,
+          total: totalCart
+        };
         dispatch(createAction(CART_ACTION_TYPES.SET_CART_ITEM, payload));
     };
 
